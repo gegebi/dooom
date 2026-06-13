@@ -697,11 +697,13 @@
         }
 
         function finalizeLineClears() {
-            // Remove full rows and insert new ones at the top
-            clearingRows.forEach(r => {
-                grid.splice(r, 1);
+            // Remove full rows
+            grid = grid.filter((row, index) => !clearingRows.includes(index));
+            
+            // Insert new empty rows at the top to maintain grid size
+            while (grid.length < ROWS) {
                 grid.unshift(new Array(COLS).fill(0));
-            });
+            }
 
             // Award score and levels
             updateScore(clearingRows.length);
